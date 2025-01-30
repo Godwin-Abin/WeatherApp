@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
   text:{
     fontSize:30,
     color:'violet',
-    fontWeight:'bold'
-  },
+    fontFamily: 'Gorditas-Regular',
+    // fontFamily: 'Gorditas-Bold',
+  }
 })
