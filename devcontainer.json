@@ -1,0 +1,38 @@
+{
+  "name": "WeatherApp",
+  "image": "mcr.microsoft.com/vscode/remotedevcontainers/typescript-node:latest",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached"
+  ],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
+  "workspaceFolder": "/app",
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.js-debug",
+    "ms-python.python",
+    "ms-vscode.typescript-javascript-rgb-highlight",
+    "react-native-tools.react-native-tools"
+  ],
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "typescript.tsdk": "/app/node_modules/typescript/lib"
+  },
+  "commands": [
+    {
+      "name": "Install Dependencies",
+      "command": "npm install"
+    },
+    {
+      "name": "Start React Native Server",
+      "command": "npx react-native start"
+    },
+    {
+      "name": "Run React Native App (Android)",
+      "command": "npx react-native run-android"
+    },
+    {
+      "name": "Run React Native App (iOS)",
+      "command": "npx react-native run-ios"
+    }
+  ]
+}
