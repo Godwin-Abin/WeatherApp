@@ -25,17 +25,17 @@ export default function App() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarStyle: {
-          backgroundColor: '#62cff4',
-          borderColor: '#62cff4',
-          shadowColor: '#62cff4',
+          backgroundColor: '#080745',
+          borderColor: '#080745',
+          shadowColor: '#080745',
         },
         tabBarIcon: ({ focused }) => {
           if (route.name === "Home") {
-              return focused ? <HomeDark width={30} height={30} /> : <HomeLight width={30} height={30} />;
+              return focused ? <HomeLight width={30} height={30} /> : <HomeDark width={30} height={30} />;
           } else if (route.name === "Widget") {
-              return focused ? <WidgetDark width={30} height={30} /> : <WidgetLight width={30} height={30} />;
+              return focused ? <WidgetLight width={30} height={30} /> : <WidgetDark width={30} height={30} />;
           } else if (route.name === "Notification") {
-              return focused ? <NotificationDark width={30} height={30} /> : <NotificationLight width={30} height={30} />;
+              return focused ? <NotificationLight width={30} height={30} /> : <NotificationDark width={30} height={30} />;
           }
         },
         tabBarLabel: '',

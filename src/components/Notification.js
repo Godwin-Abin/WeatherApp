@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
+import { Fonts } from '../styles/Fonts'
 
 const Notification = () => {
   return (
-    <LinearGradient colors={['#2c67f2', '#62cff4']} style={styles.container}>
+    <LinearGradient colors={['#075B94', '#080745']} style={styles.container}>
       <View>
         <Text style={styles.text}>Notification</Text>
       </View>
@@ -22,6 +23,6 @@ const styles = StyleSheet.create({
   text:{
     fontSize:30,
     color:'violet',
-    fontWeight:'bold'
+    fontFamily:Fonts.GorditasBold,
   },
 })
