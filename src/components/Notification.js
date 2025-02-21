@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
-import { Fonts } from '../styles/Fonts'
+import { Fonts } from '../styles/Fonts';
 
 const Notification = () => {
   return (
