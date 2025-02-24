@@ -1,25 +1,28 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient'
+import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { Fonts } from '../styles/Fonts';
 
+import Snow from '../assets/Images/snow.png';
+import Raining from '../assets/Images/rain.png';
+import Sunny from '../assets/Images/sunny.png';
 
 const notifications = [
-  { title: 'A Storm is approaching!', icon: '🌧️' },
-  { title: 'There will be snow tomorrow', icon: '❄️' },
-  { title: 'It’s a sunny day', icon: '🌤️' },
+  { title: 'A Storm is approaching!', icon: Raining },
+  { title: 'There will be snow tomorrow', icon: Snow },
+  { title: 'It’s a sunny day', icon: Sunny },
 ];
 
 const NotificationCard = ({ title, icon }) => (
   <View style={styles.card}>
     <View style={styles.header}>
-      <Text style={styles.icon}>{icon}</Text>
+      <Image source={icon} style={styles.weatherIcon} />
       <Text style={styles.title}>{title}</Text>
     </View>
     <Text style={styles.description}>
-      A high frequency storm is likely to approach your city with a magnitude of
+      A high-frequency storm is likely to approach your city with a magnitude of
       6.0. It is likely to deal damage to weak structures. Please stay safe
-      indoor or under shelter.
+      indoors or under shelter.
     </Text>
   </View>
 );
@@ -34,8 +37,8 @@ const Notification = () => {
         keyExtractor={(item, index) => index.toString()}
       />
     </LinearGradient>
-  )
-}
+  );
+};
 
 export default Notification;
 
@@ -47,36 +50,36 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: 'white',
-    fontSize: 40,
-    // fontWeight: 'bold',
+    fontSize: 36,
     textAlign: 'center',
     marginBottom: 20,
     fontFamily: Fonts.GorditasBold,
   },
   card: {
-    backgroundColor: '#075B90',
+    backgroundColor: '#0A4DA2',
     borderRadius: 15,
-    padding: 15,
+    padding: 20,
     marginBottom: 15,
-    height: 230,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
   },
-  icon: {
-    fontSize: 28,
+  weatherIcon: {
+    width: 40,
+    height: 40,
     marginRight: 10,
   },
   title: {
-    fontSize: 23,
-    // fontWeight: 'bold',
+    fontSize: 20,
+    fontWeight: 'bold',
     color: 'white',
   },
   description: {
-    marginTop:10,
-    fontSize: 20,
+    marginTop: 5,
+    fontSize: 16,
     color: 'white',
+    lineHeight: 24, // Added better line spacing
   },
 });

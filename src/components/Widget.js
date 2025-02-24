@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
-    fontSize: 30,
+    fontSize: 36,
     // fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',

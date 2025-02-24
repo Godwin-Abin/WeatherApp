@@ -56,12 +56,9 @@ const Home = () => {
         <Text style={styles.time}>June 20, 3:01 AM</Text>
 
         {/* Weather Image */}
-        <Image
-          source={CloudRain}
-          style={styles.weatherImage}
-        />
+        <Image source={CloudRain} style={styles.weatherImage} />
 
-        {/* Weather Info Section (Fixed Alignment) */}
+        {/* Weather Info Section */}
         <View style={styles.weatherInfo}>
           <View style={styles.weatherItem}>
             <View style={styles.WeatherIcon}>
@@ -122,9 +119,6 @@ const Home = () => {
         {/* Extended Forecast (View All) */}
         {showFullForecast && (
           <View style={styles.expandedForecast}>
-            <View>
-              <Text style={styles.forecastTitle}>Next Forecast</Text>
-            </View>
             <FlatList
               data={extendedForecastData}
               keyExtractor={(item, index) => index.toString()}
@@ -179,8 +173,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: height * 0.03,
   },
-
-  // Weather Info Styles
   weatherInfo: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -190,22 +182,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: height * 0.15,
   },
-  weatherItem: {
-    alignItems: 'center',
-  },
-  weatherText: {
-    color: '#B0C4DE',
-    fontSize: width * 0.04,
-    marginTop: 5,
-  },
-  weatherValue: {
-    color: 'white',
-    fontSize: width * 0.05,
-    fontWeight: 'bold',
-    marginTop: 2,
-  },
-
-  // Forecast Styles
   forecastContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -233,31 +209,20 @@ const styles = StyleSheet.create({
   highlightedCard: {
     backgroundColor: '#1A73E8',
   },
-  forecastRow: {
-    flexDirection: 'row',
+  expandedForecast: {
+    marginTop: 10,
+  },
+  extendedForecastCard: {
+    backgroundColor: '#0A4DA2',
+    borderRadius: 15,
+    padding: height * 0.02,
+    marginBottom: height * 0.02,
     alignItems: 'center',
-  },
-  forecastIcon: {
-    width: width * 0.12,
-    height: width * 0.12,
-    resizeMode: 'contain',
-    marginRight: 10,
-  },
-  forecastDetails: {
-    alignItems: 'flex-end',
-  },
-  forecastTime: {
-    color: 'white',
-    fontSize: width * 0.04,
   },
   forecastTemp: {
     color: 'white',
-    fontSize: width * 0.05,
+    fontSize: width * 0.06,
     fontWeight: 'bold',
-  },
-  WeatherIcon:{
-    flexDirection:'row',
-    alignItems:'center',
   },
 });
 
