@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -40,10 +40,19 @@ const extendedForecastData = [
   { day: 'Friday', date: '23 June', temp: '24°', icon: Raining },
   { day: 'Saturday', date: '24 June', temp: '30°', icon: Sunny },
   { day: 'Sunday', date: '25 June', temp: '22°', icon: CloudRain },
+  { day: 'Monday', date: '26 June', temp: '26°', icon: Sunny },
+  { day: 'Tuesday', date: '27 June', temp: '22°', icon: CloudRain },
 ];
 
 const Home = () => {
   const [showFullForecast, setShowFullForecast] = useState(false);
+  const [selectedDays, setSelectedDays] = useState('5 day');
+  const [showDayPicker, setShowDayPicker] = useState(false);
+
+  const filteredForecastData = useMemo(() => {
+    const days = parseInt(selectedDays);
+    return extendedForecastData.slice(0, days);
+  }, [selectedDays]);
 
   return (
     <LinearGradient colors={['#075B94', '#080745']} style={styles.container}>
@@ -61,7 +70,7 @@ const Home = () => {
           style={styles.weatherImage}
         />
 
-        {/* Weather Info Section (Fixed Alignment) */}
+        {/* Weather Info Section */}
         <View style={styles.weatherInfo}>
           <View style={styles.weatherItem}>
             <View style={styles.WeatherIcon}>
@@ -122,21 +131,51 @@ const Home = () => {
         {/* Extended Forecast (View All) */}
         {showFullForecast && (
           <View style={styles.expandedForecast}>
-            <View>
+            <View style={styles.forecastHeader}>
               <Text style={styles.forecastTitle}>Next Forecast</Text>
+              <TouchableOpacity 
+                style={styles.daySelector}
+                onPress={() => setShowDayPicker(!showDayPicker)}
+              >
+                <Text style={styles.daySelectorText}>{selectedDays}</Text>
+                <Text style={[styles.dropdownArrow, showDayPicker && styles.dropdownArrowUp]}>▼</Text>
+              </TouchableOpacity>
+              
+              {showDayPicker && (
+                <View style={styles.dropdownMenu}>
+                  {['3 day', '5 day', '7 day'].map((option) => (
+                    <TouchableOpacity
+                      key={option}
+                      style={styles.dropdownItem}
+                      onPress={() => {
+                        setSelectedDays(option);
+                        setShowDayPicker(false);
+                      }}
+                    >
+                      <Text style={[
+                        styles.dropdownItemText,
+                        selectedDays === option && styles.selectedDropdownItem
+                      ]}>
+                        {option}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
             </View>
-            <FlatList
-              data={extendedForecastData}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => (
-                <View style={styles.extendedForecastCard}>
+            {/* Instead of a FlatList, we map over the filtered data */}
+            {filteredForecastData.map((item, index) => (
+              <View key={index.toString()} style={styles.extendedForecastCard}>
+                <View style={styles.extendedForecastLeft}>
                   <Text style={styles.forecastDay}>{item.day}</Text>
                   <Text style={styles.forecastDate}>{item.date}</Text>
+                </View>
+                <View style={styles.extendedForecastRight}>
                   <Image source={item.icon} style={styles.forecastIcon} />
                   <Text style={styles.forecastTemp}>{item.temp}</Text>
                 </View>
-              )}
-            />
+              </View>
+            ))}
           </View>
         )}
       </ScrollView>
@@ -179,8 +218,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: height * 0.03,
   },
-
-  // Weather Info Styles
   weatherInfo: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -204,8 +241,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 2,
   },
-
-  // Forecast Styles
   forecastContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -258,6 +293,92 @@ const styles = StyleSheet.create({
   WeatherIcon:{
     flexDirection:'row',
     alignItems:'center',
+  },
+  expandedForecast: {
+    marginTop: height * 0.03,
+  },
+  extendedForecastCard: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: height * 0.02,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  extendedForecastLeft: {
+    flex: 1,
+  },
+  extendedForecastRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  forecastDay: {
+    color: 'white',
+    fontSize: width * 0.045,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  forecastDate: {
+    color: '#B0C4DE',
+    fontSize: width * 0.035,
+  },
+  forecastHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: height * 0.02,
+    position: 'relative',
+  },
+  daySelector: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    paddingHorizontal: width * 0.03,
+    paddingVertical: height * 0.01,
+    borderRadius: 20,
+  },
+  daySelectorText: {
+    color: 'white',
+    fontSize: width * 0.035,
+    marginRight: 5,
+  },
+  dropdownArrow: {
+    color: 'white',
+    fontSize: width * 0.03,
+  },
+  dropdownArrowUp: {
+    transform: [{ rotate: '180deg' }],
+  },
+  dropdownMenu: {
+    position: 'absolute',
+    top: '100%',
+    right: 0,
+    backgroundColor: '#1B1B3A',
+    borderRadius: 10,
+    padding: 5,
+    marginTop: 5,
+    zIndex: 1000,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  dropdownItem: {
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+  },
+  dropdownItemText: {
+    color: 'white',
+    fontSize: width * 0.035,
+  },
+  selectedDropdownItem: {
+    color: '#1A73E8',
   },
 });
 
